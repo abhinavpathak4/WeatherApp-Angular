@@ -1,0 +1,19 @@
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    margin: 5px 0;
+  }
+  input.transparent-input{
+    background-color:rgb(215, 241, 250);
+    display: flex;
+    margin: auto;
+    width: auto;
+    height: auto;
+ }  
