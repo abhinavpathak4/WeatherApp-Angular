@@ -39,12 +39,7 @@ export class WeatherComponent implements OnInit {
       map((response: WeatherResponse) => {
         const forecastData: { [date: string]: ForecastData } = {};
         response.list.forEach(forecast => {
-          const dateObj = new Date(forecast.dt * 1000);
-          const month = dateObj.toLocaleString('en-US', { month: 'long' });
-          const day = dateObj.toLocaleString('en-US', { day: 'numeric' });
-          const weekday = dateObj.toLocaleString('en-US', { weekday: 'long' });
-          const formattedDate = `${month} ${day}, ${weekday}`;
-
+          const formattedDate = this.formatDate(forecast.dt * 1000);
           if (!forecastData[formattedDate]) {
             forecastData[formattedDate] = {
               date: formattedDate,
@@ -61,6 +56,7 @@ export class WeatherComponent implements OnInit {
             forecastData[formattedDate].maxTemp = Math.max(forecastData[formattedDate].maxTemp, forecast.main.temp_max);
           }
         });
+        
         this.forecastData = Object.values(forecastData);
         return response;
       })
@@ -73,6 +69,23 @@ export class WeatherComponent implements OnInit {
         this.errorFlag = true;
       }
     );
+  }
+
+
+
+  /**
+   * @method formatDate
+   * Transform timestamp to formatted date string
+   * @param timestamp
+   * @returns formatted date string
+   * @memberof WeatherComponent
+   */
+  formatDate(timestamp: number): string {
+    const dateObj = new Date(timestamp);
+    const month = dateObj.toLocaleString('en-US', { month: 'long' });
+    const day = dateObj.toLocaleString('en-US', { day: 'numeric' });
+    const weekday = dateObj.toLocaleString('en-US', { weekday: 'long' });
+    return `${month} ${day}, ${weekday}`;
   }
 
   /**

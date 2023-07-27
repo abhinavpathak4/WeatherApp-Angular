@@ -19,10 +19,23 @@
  }  
  
  .font-weight{
-  color: aliceblue;
+  color: rgb(231, 240, 248);
   font-weight: 900;
  }
 
  .bolder{
-  font-weight: 800;
+  text-shadow: 0 0 3px #252525, 0 0 5px #4848f7;
+  color: #ffffff;
+  font-weight: 900;
+ }
+ .bolder2{
+  text-shadow: 0 0 3px #252525, 0 0 5px #4848f7;
+  color: #ffffff;
+  font-weight: 400;
+ }
+
+ .bolder3{
+  text-shadow: 0 0 2px #252525, 0 0 3px #4848f7;
+  color: #f8f7f7;
+  font-weight: 400;
  }
