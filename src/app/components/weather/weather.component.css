@@ -10,10 +10,19 @@
   .card-text {
     margin: 5px 0;
   }
-  input.transparent-input{
+  .transparent-input{
     background-color:rgb(215, 241, 250);
     display: flex;
     margin: auto;
-    width: auto;
+    width: 350px;
     height: auto;
  }  
+ 
+ .font-weight{
+  color: aliceblue;
+  font-weight: 900;
+ }
+
+ .bolder{
+  font-weight: 800;
+ }

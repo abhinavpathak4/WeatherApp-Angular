@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
+import {  map } from 'rxjs/operators';
+import { ForecastData } from 'src/app/interfaces/forecast-data';
 import { WeatherResponse } from 'src/app/interfaces/weather-response';
 import { WeatherService } from 'src/app/services/weather.service';
+
+
 
 @Component({
   selector: 'app-weather',
@@ -9,19 +12,32 @@ import { WeatherService } from 'src/app/services/weather.service';
   styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent implements OnInit {
-  forecastData: any[] = []; // Array to store weekly report data
-  cityName : string = 'delhi';
+
+  // list to store weather forecast data
+  forecastData: ForecastData[] = [];
+
+  // name of city
+  cityName: string = 'delhi';
+
+  // flag to check whether the searched city data exists or not
+  errorFlag: boolean = false;
+
   constructor(private weatherService: WeatherService) { }
 
   ngOnInit(): void {
-    this.getWeather("delhi");
+    this.getWeather(this.cityName);
   }
 
-  getWeather(cityName: string) {
+  /**
+   * @method getWeather
+   * get weather of city searched
+   * @param cityName name of city to search for it's weather data
+   * @memberof WeatherComponent
+   */
+  getWeather(cityName: string): void {
     this.weatherService.getWeatherData(cityName).pipe(
       map((response: WeatherResponse) => {
-        // Extract dates and max temperature from the forecast data
-        const forecastData: { [date: string]: any } = {}; // Use an object instead of Map
+        const forecastData: { [date: string]: ForecastData } = {};
         response.list.forEach(forecast => {
           const dateObj = new Date(forecast.dt * 1000);
           const month = dateObj.toLocaleString('en-US', { month: 'long' });
@@ -37,41 +53,58 @@ export class WeatherComponent implements OnInit {
               windSpeed: forecast.wind.speed,
               weather: forecast.weather[0].main,
               minTemp: forecast.main.temp_min,
-              maxTemp: forecast.main.temp_max
+              maxTemp: forecast.main.temp_max,
+              feelsLike: forecast.main.feels_like
             };
           } else {
             forecastData[formattedDate].minTemp = Math.min(forecastData[formattedDate].minTemp, forecast.main.temp_min);
             forecastData[formattedDate].maxTemp = Math.max(forecastData[formattedDate].maxTemp, forecast.main.temp_max);
           }
         });
-
         this.forecastData = Object.values(forecastData);
-        console.log(this.forecastData);
-
         return response;
       })
     ).subscribe(
       (response: WeatherResponse) => {
-        // Here you can continue with the rest of your logic using the response data
-        // ...
+        this.errorFlag = false;
+        this.cityName = cityName;
       },
-      (error: any) => {
-        console.error('Error fetching weather data:', error);
+      (error: Error) => {
+        this.errorFlag = true;
       }
     );
-    this.cityName = cityName;
   }
 
+  /**
+   * @method getWeatherBackground
+   * get url of image to be displayed as card's background
+   * @param temperature 
+   * @param weather 
+   * @returns image url to be displayed as background
+   * @memberof WeatherComponent
+   */
+  getWeatherBackground(temperature: number, weather : string): string {
+    if (temperature <= 0) return 'url(/assets/snowfall.jpg)';
+    else if (weather === 'Rain') return 'url(/assets/bg-rain.png)';
+    else if (weather === 'Clear') return 'url(/assets/bg-clear.png)';
+    else if (weather === 'Clouds') return 'url(/assets/bg-cloudy.png)';
+    else return 'url(/assets/snowfall.jpg)';
+  }
 
-  getWeatherBackground(temperature: number): string {
-    if (temperature >= 25) {
-      return 'url(/assets/hot.jpg)';
-    } else if (temperature < 25 && temperature >= 15) {
-      return 'url(/assets/clear.jpg)';
-    } else if (temperature < 15) {
-      return 'url(/assets/cold.jpg)';
-    } else {
-      return 'url(/assets/cold.jpg)'; // Fallback image
-    }
+   /**
+   * @method getWeatherIcon
+   * get url of icon to be displayed
+   * @param temperature 
+   * @param weather 
+   * @returns icon url(as string) to be displayed as background
+   * @memberof WeatherComponent
+   */
+  getWeatherIcon(weather: string, temperature: number): string {
+    if (temperature <= 0) return '/assets/icon-snow.png';
+    else if (weather === 'Rain') return '/assets/icon-rain.png';
+    else if (weather === 'Clouds') return '/assets/icon-clouds.png';
+    else if (weather === 'Clear') return '/assets/icon-clear.png';
+    else return '/assets/icon-clouds.png';
   }
 }
+
