@@ -13,14 +13,9 @@ import { WeatherService } from 'src/app/services/weather.service';
 })
 export class WeatherComponent implements OnInit {
 
-  // list to store weather forecast data
-  forecastData: ForecastData[] = [];
-
-  // name of city
-  cityName: string = 'delhi';
-
-  // flag to check whether the searched city data exists or not
-  errorFlag: boolean = false;
+  forecastData: ForecastData[] = [];// list to store weather forecast data
+  cityName: string = 'delhi'; 
+  errorFlag: boolean = false;// flag to check whether the searched city data exists or not
 
   constructor(private weatherService: WeatherService) { }
 
@@ -55,8 +50,7 @@ export class WeatherComponent implements OnInit {
             forecastData[formattedDate].minTemp = Math.min(forecastData[formattedDate].minTemp, forecast.main.temp_min);
             forecastData[formattedDate].maxTemp = Math.max(forecastData[formattedDate].maxTemp, forecast.main.temp_max);
           }
-        });
-        
+        });    
         this.forecastData = Object.values(forecastData);
         return response;
       })
@@ -86,38 +80,6 @@ export class WeatherComponent implements OnInit {
     const day = dateObj.toLocaleString('en-US', { day: 'numeric' });
     const weekday = dateObj.toLocaleString('en-US', { weekday: 'long' });
     return `${month} ${day}, ${weekday}`;
-  }
-
-  /**
-   * @method getWeatherBackground
-   * get url of image to be displayed as card's background
-   * @param temperature 
-   * @param weather 
-   * @returns image url to be displayed as background
-   * @memberof WeatherComponent
-   */
-  getWeatherBackground(temperature: number, weather : string): string {
-    if (temperature <= 0) return 'url(/assets/snowfall.jpg)';
-    else if (weather === 'Rain') return 'url(/assets/bg-rain.png)';
-    else if (weather === 'Clear') return 'url(/assets/bg-clear.png)';
-    else if (weather === 'Clouds') return 'url(/assets/bg-cloudy.png)';
-    else return 'url(/assets/snowfall.jpg)';
-  }
-
-   /**
-   * @method getWeatherIcon
-   * get url of icon to be displayed
-   * @param temperature 
-   * @param weather 
-   * @returns icon url(as string) to be displayed as background
-   * @memberof WeatherComponent
-   */
-  getWeatherIcon(weather: string, temperature: number): string {
-    if (temperature <= 0) return '/assets/icon-snow.png';
-    else if (weather === 'Rain') return '/assets/icon-rain.png';
-    else if (weather === 'Clouds') return '/assets/icon-clouds.png';
-    else if (weather === 'Clear') return '/assets/icon-clear.png';
-    else return '/assets/icon-clouds.png';
   }
 }
 

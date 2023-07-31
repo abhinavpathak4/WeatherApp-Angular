@@ -8,8 +8,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class WeatherService {
-  apiKey: string = environment.apiKey;
-  baseUrl: string = environment.baseUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -21,7 +19,7 @@ export class WeatherService {
    * @memberof weatherService
    */
   getWeatherData(city: string): Observable<WeatherResponse> {
-    const url = `${this.baseUrl}?q=${city}&units=metric&APPID=${this.apiKey}`;
+    const url = `${environment.baseUrl}?q=${city}&units=metric&APPID=${environment.apiKey}`;
     return this.http.get<WeatherResponse>(url); 
   }
 }
