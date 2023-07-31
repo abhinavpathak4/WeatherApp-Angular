@@ -1,15 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 body{
     font-family: "Arial", Times, serif;
-    /* color: white;*/
-    background-color: #ccccff; 
-    /* background-color: #5cb0e09a; */
-    /* height: 100%; */
-
-    /* background-size: auto; */
+    font-family: 'Raleway', sans-serif;
     background-image: url('assets/body-bg1.jpg');
-    /* background-attachment: fixed; */
- 
 }
 
 
