@@ -5,55 +5,55 @@
 
 <div class="container">
   <div class="row my-3">
-    <div *ngIf="forecastData.length > 0" class="col-md-12">
+    <div *ngIf="forecastList.length > 0" class="col-md-12">
       <div class="card m-4" [ngStyle]="{
 
-        'background-image': (forecastData[0].temp <= 0) ? 'url(/assets/snowfall.jpg)':
-        (forecastData[0].weather === 'Rain') ? 'url(/assets/bg-rain.png)' :
-                          (forecastData[0].weather === 'Clear') ? 'url(/assets/bg-clear.png)' :
-                          (forecastData[0].weather === 'Clouds') ? 'url(/assets/bg-cloudy.png)' :'url(/assets/snowfall.jpg)',   
+        'background-image': (forecastList[0].temp <= 0) ? 'url(/assets/snowfall.jpg)':
+        (forecastList[0].weather === 'Rain') ? 'url(/assets/bg-rain.png)' :
+                          (forecastList[0].weather === 'Clear') ? 'url(/assets/bg-clear.png)' :
+                          (forecastList[0].weather === 'Clouds') ? 'url(/assets/bg-cloudy.png)' :'url(/assets/snowfall.jpg)',   
         'border-radius': '35px',
         'background-size': 'cover'
     }">
         <div class="card-body p-4">
           <div class="d-flex flex-column text-center  mt-5 mb-4">
-            <h6 class="display-6  mb-2 bolder font-weight "> <b> {{ forecastData[0].date }}</b></h6>
+            <h6 class="display-6  mb-2 bolder font-weight "> <b> {{ forecastList[0].date }}</b></h6>
             <h6 class="display-4 mb-0 bolder font-weight-bolder ">{{cityName | uppercase }}</h6>
           </div>
 
           <div class="d-flex align-items-center bolder2">
             <div class="d-flex flex-grow-1 flex-column text-center mt-2 mb-4">
-              <h6 class="display-4 mb-0 font-weight-bold bolder3">{{ forecastData[0].temp }}°C</h6>
-              <div><i>Feels like &nbsp;</i><span class="ms-1">{{ forecastData[0].feelsLike }}°C&nbsp;</span></div>
-              <span class="small">{{ forecastData[0].weather }}</span>
+              <h6 class="display-4 mb-0 font-weight-bold bolder3">{{ forecastList[0].temp }}°C</h6>
+              <div><i>Feels like &nbsp;</i><span class="ms-1">{{ forecastList[0].feelsLike }}°C&nbsp;</span></div>
+              <span class="small">{{ forecastList[0].weather }}</span>
             </div>
           </div>
           <div class="d-flex align-items-center">
 
             <div class="flex-grow-1 bolder2">
               <div>
-                <div><span class="ms-1">{{ forecastData[0].maxTemp }}°C&nbsp;</span><i class="badge bg-danger">max</i>
+                <div><span class="ms-1">{{ forecastList[0].maxTemp }}°C&nbsp;</span><i class="badge bg-danger">max</i>
                 </div>
               </div>
               <div>
-                <div><span class="ms-1">{{ forecastData[0].minTemp }}°C&nbsp;</span><i class="badge bg-primary">min</i>
+                <div><span class="ms-1">{{ forecastList[0].minTemp }}°C&nbsp;</span><i class="badge bg-primary">min</i>
                 </div>
               </div>
-              <div> <span class="ms-1">{{ forecastData[0].windSpeed }} km/h&nbsp;</span><img src="/assets/icon-wind.png"
+              <div> <span class="ms-1">{{ forecastList[0].windSpeed }} km/h&nbsp;</span><img src="/assets/icon-wind.png"
                   width="20px"></div>
-              <div> <span class="ms-1">{{ forecastData[0].humidity }}%&nbsp;&nbsp;</span><i><img
+              <div> <span class="ms-1">{{ forecastList[0].humidity }}%&nbsp;&nbsp;</span><i><img
                     src="/assets/icon-humidity.png" width="20px"></i></div>
             </div>
 
             <div class="d-flex justify-content-center align-items-center">
 
-              <div *ngIf="forecastData[0].temp <= 0; else case2">
+              <div *ngIf="forecastList[0].temp <= 0; else case2">
                 <img src="/assets/icon-snow.png" width="100px">
               </div>
               <ng-template #case2>
-                <img *ngIf="forecastData[0].weather === 'Clouds'" src="/assets/icon-clouds.png" width="100px">
-                <img *ngIf="forecastData[0].weather === 'Clear'" src="/assets/icon-clear.png" width="100px">
-                <img *ngIf="forecastData[0].weather === 'Rain'" src="/assets/icon-rain.png" width="100px">
+                <img *ngIf="forecastList[0].weather === 'Clouds'" src="/assets/icon-clouds.png" width="100px">
+                <img *ngIf="forecastList[0].weather === 'Clear'" src="/assets/icon-clear.png" width="100px">
+                <img *ngIf="forecastList[0].weather === 'Rain'" src="/assets/icon-rain.png" width="100px">
               </ng-template>
 
             </div>
@@ -67,8 +67,8 @@
 
 
   <div class="row">
-    <ng-container *ngFor="let report of forecastData | slice : 1; let i = index;">
-      <div *ngIf="forecastData.length > 0" class="col-md-6 p-4">
+    <ng-container *ngFor="let report of forecastList | slice : 1; let i = index;">
+      <div *ngIf="forecastList.length > 0" class="col-md-6 p-4">
         <div class="card m-4" [ngStyle]="{
 
           'background-image': (report.temp <= 0) ? 'url(/assets/snowfall.jpg)':
@@ -104,7 +104,7 @@
                       width="20px"></i></div>
               </div>
               <div class="d-flex justify-content-center align-items-center">
-                <div *ngIf="forecastData[0].temp <= 0; else case2">
+                <div *ngIf="forecastList[0].temp <= 0; else case2">
                   <img src="/assets/icon-snow.png" width="100px">
                 </div>
                 <ng-template #case2>

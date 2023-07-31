@@ -13,7 +13,7 @@ import { WeatherService } from 'src/app/services/weather.service';
 })
 export class WeatherComponent implements OnInit {
 
-  forecastData: ForecastData[] = [];// list to store weather forecast data
+  forecastList: ForecastData[] = [];// list to store weather forecast data
   cityName: string = 'delhi'; 
   errorFlag: boolean = false;// flag to check whether the searched city data exists or not
 
@@ -32,11 +32,11 @@ export class WeatherComponent implements OnInit {
   getWeather(cityName: string): void {
     this.weatherService.getWeatherData(cityName).pipe(
       map((response: WeatherResponse) => {
-        const forecastData: { [date: string]: ForecastData } = {};
+        const forecastList: { [date: string]: ForecastData } = {};
         response.list.forEach(forecast => {
           const formattedDate = this.formatDate(forecast.dt * 1000);
-          if (!forecastData[formattedDate]) {
-            forecastData[formattedDate] = {
+          if (!forecastList[formattedDate]) {
+            forecastList[formattedDate] = {
               date: formattedDate,
               temp: forecast.main.temp,
               humidity: forecast.main.humidity,
@@ -47,11 +47,11 @@ export class WeatherComponent implements OnInit {
               feelsLike: forecast.main.feels_like
             };
           } else {
-            forecastData[formattedDate].minTemp = Math.min(forecastData[formattedDate].minTemp, forecast.main.temp_min);
-            forecastData[formattedDate].maxTemp = Math.max(forecastData[formattedDate].maxTemp, forecast.main.temp_max);
+            forecastList[formattedDate].minTemp = Math.min(forecastList[formattedDate].minTemp, forecast.main.temp_min);
+            forecastList[formattedDate].maxTemp = Math.max(forecastList[formattedDate].maxTemp, forecast.main.temp_max);
           }
         });    
-        this.forecastData = Object.values(forecastData);
+        this.forecastList = Object.values(forecastList);
         return response;
       })
     ).subscribe(
