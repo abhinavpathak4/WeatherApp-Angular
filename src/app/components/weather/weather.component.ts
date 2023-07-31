@@ -30,6 +30,7 @@ export class WeatherComponent implements OnInit {
    * @memberof WeatherComponent
    */
   getWeather(cityName: string): void {
+    cityName.trim();
     this.weatherService.getWeatherData(cityName).pipe(
       map((response: WeatherResponse) => {
         const forecastList: { [date: string]: ForecastData } = {};
